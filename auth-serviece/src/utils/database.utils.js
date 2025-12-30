@@ -4,9 +4,9 @@ import prisma from "../config/database.config";
 export const testConnection = async () => {
   try {
     await prisma.$connect();
-    console.log("Database connected ✅");
+    console.log("Database connected...");
   } catch (error) {
-    console.error("Database connection failed ❌", error);
+    console.error("Database connection failed ...", error);
     throw error;
   }
 };
@@ -24,8 +24,8 @@ export const initializeDb = async () => {
 export const disconnectDb = async () => {
   try {
     await prisma.$disconnect(); // correct spelling: $disconnect
-    console.log("Database disconnected ✅");
+    console.log("Database disconnected...");
   } catch (error) {
-    console.error("Database disconnection failed ❌", error);
+    console.error("Database disconnection failed..", error);
   }
 };
