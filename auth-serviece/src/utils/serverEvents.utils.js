@@ -56,7 +56,7 @@ class ServerEvents {
   }
 
   setupGracefulShutdown(server) {
-    const shutdown = async (signal) => {
+    const shutdown = (signal) => {
       console.log(`Received ${signal}`);
 
       if (this.isShuttingDown) return;
