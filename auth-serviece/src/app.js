@@ -1,29 +1,33 @@
-import express from 'express';
 import http from 'http';
-import cors from 'cors'
-import {
-  onServerStart,
-  setupGracefulShutdown
-} from './utils/serverEvents.utils.js';
+
+import cors from 'cors';
+import express from 'express';
+
+import { onServerStart, setupGracefulShutdown } from './utils/serverEvents.utils.js';
 
 const app = express();
 
-app.use(cors({
-  origin:process.env.CORS_ORIGIN,
-  credentials:true
-}))
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  })
+);
 
-app.use(express.json({
-  limit:"16kb"
-}))
+app.use(
+  express.json({
+    limit: '16kb',
+  })
+);
 
-app.use(express.urlencoded({
-  extended:true,
-  limit:true
-}))
+app.use(
+  express.urlencoded({
+    extended: true,
+    limit: true,
+  })
+);
 
-app.use(express.static("public"))
-
+app.use(express.static('public'));
 
 // Health check route
 app.get('/api/health', (_req, res) => {

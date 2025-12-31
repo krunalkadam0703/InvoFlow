@@ -20,7 +20,6 @@ class ServerEvents {
     try {
       await prisma.$connect();
       console.log('Database connected');
-     
 
       for (const handler of this.startupHandlers) {
         await handler();
@@ -47,7 +46,7 @@ class ServerEvents {
       }
 
       await prisma.$disconnect();
-      redis.disconnect()
+      redis.disconnect();
       console.log('Database disconnected');
 
       console.log('Shutdown complete');
@@ -94,5 +93,4 @@ export default serverEvents;
 
 export const onServerStart = (port) => serverEvents.executeStartup(port);
 export const onServerStop = () => serverEvents.executeShutdown();
-export const setupGracefulShutdown = (server) =>
-  serverEvents.setupGracefulShutdown(server);
+export const setupGracefulShutdown = (server) => serverEvents.setupGracefulShutdown(server);
