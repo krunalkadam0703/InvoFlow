@@ -1,11 +1,30 @@
 import express from 'express';
 import http from 'http';
+import cors from 'cors'
 import {
   onServerStart,
   setupGracefulShutdown
 } from './utils/serverEvents.js';
 
 const app = express();
+
+app.use(cors({
+  origin:process.env.CORS_ORIGIN,
+  credentials:true
+}))
+
+app.use(express.json({
+  limit:"16kb"
+}))
+
+app.use(express.urlencoded({
+  extended:true,
+  limit:true
+}))
+
+app.use(express.static("public"))
+
+
 
 // Middleware
 app.use(express.json());
