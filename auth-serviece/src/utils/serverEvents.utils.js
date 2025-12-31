@@ -1,4 +1,5 @@
 import prisma from '../config/database.config.js';
+import { redis } from '../config/redis.config.js';
 
 class ServerEvents {
   constructor() {
@@ -19,6 +20,7 @@ class ServerEvents {
     try {
       await prisma.$connect();
       console.log('Database connected');
+      redis.connect()
 
       for (const handler of this.startupHandlers) {
         await handler();
@@ -45,6 +47,7 @@ class ServerEvents {
       }
 
       await prisma.$disconnect();
+      redis.disconnect()
       console.log('Database disconnected');
 
       console.log('Shutdown complete');

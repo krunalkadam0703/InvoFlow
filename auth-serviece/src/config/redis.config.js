@@ -1,35 +1,20 @@
 import Redis from "ioredis";
 
-let redis;
+export const redis = new Redis({
+  host: process.env.REDIS_HOST || "127.0.0.1",
+  port: Number(process.env.REDIS_PORT) || 6379,
+  password: process.env.REDIS_PASSWORD || undefined,
+  db: Number(process.env.REDIS_DB) || 0,
+  keyPrefix: process.env.REDIS_KEY_PREFIX
+    ? `${process.env.REDIS_KEY_PREFIX}:`
+    : undefined,
 
-export const getRedis = () => {
-  if (redis) return redis;
+  enableReadyCheck: true,
+  maxRetriesPerRequest: 3,
+  retryStrategy: (times) => Math.min(times * 50, 2000),
+});
 
-  redis = new Redis({
-    host: process.env.REDIS_HOST,
-    port: Number(process.env.REDIS_PORT),
-    password: process.env.REDIS_PASSWORD || undefined,
-    db: Number(process.env.REDIS_DB || 0),
-    keyPrefix: `${process.env.REDIS_KEY_PREFIX}:`,
-    enableReadyCheck: true,
-    maxRetriesPerRequest: 3,
-    retryStrategy: (times) => Math.min(times * 50, 2000),
-  });
-
-  redis.on("connect", () => {
-    console.log("Redis connected");
-  });
-
-  redis.on("error", (err) => {
-    console.error("Redis error:", err);
-  });
-
-  return redis;
-};
-
-export const closeRedis = async () => {
-  if (redis) {
-    await redis.quit();
-    console.log("Redis connection closed");
-  }
-};
+redis.on("connect", () => console.log("Redis connected"));
+redis.on("ready", () => console.log("Redis ready"));
+redis.on("error", (err) => console.error("Redis error:", err));
+redis.on("close", () => console.warn("Redis connection closed"));
