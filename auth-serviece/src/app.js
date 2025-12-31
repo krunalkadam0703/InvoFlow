@@ -4,7 +4,7 @@ import cors from 'cors'
 import {
   onServerStart,
   setupGracefulShutdown
-} from './utils/serverEvents.js';
+} from './utils/serverEvents.utils.js';
 
 const app = express();
 
@@ -24,10 +24,6 @@ app.use(express.urlencoded({
 
 app.use(express.static("public"))
 
-
-
-// Middleware
-app.use(express.json());
 
 // Health check route
 app.get('/api/health', (_req, res) => {

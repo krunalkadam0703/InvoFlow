@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import ApiError from './appiError.utils'
+import ApiError from './appiError.utils.js'
 
 const access_token_secrete = process.env.JWT_ACCESS_TOKEN_SECRETE
 const accessTokenExpiresIn = process.env.JWT_ACCESS_TOKEN_EXPIRES_IN

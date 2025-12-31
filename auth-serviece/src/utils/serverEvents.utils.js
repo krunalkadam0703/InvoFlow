@@ -20,7 +20,6 @@ class ServerEvents {
     try {
       await prisma.$connect();
       console.log('Database connected');
-      redis.connect()
 
       for (const handler of this.startupHandlers) {
         await handler();
